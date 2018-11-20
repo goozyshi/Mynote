@@ -117,3 +117,100 @@ const debounce = (func, wait = 50) => {
 - 对于延时执行函数来说的实现：清除定时器ID，如果是延迟调用就调用函数
 ## 2. 节流
 将多次执行变成每隔一段时间执行
+
+# 十. 继承（简）
+- 对象冒充
+- 原型链
+
+    先创建父类实例 => 改变实例原先的` _proto__ `转而连接到子类的 prototype => 子类的 prototype 的 `__proto__ `改为父类的 prototype
+
+- 混合模式
+
+# XI.异步
+## 1. Promise
+处理异步，解决回调地狱
+
+可以把 Promise 看成一个状态机：
+
+初始状态是 `pending`  ( 仅`pending`状态可改变且只可变一次 )
+
+通过 `resolve `和` reject `函数，
+
+将状态转变为` resolved `或者 `rejected` 状态
+
+`then`函数会返回一个新的`Promise 实例`，如果返回的是一个相同实例的话，多个 then 调用就失去意义了。
+
+## 2. Generator
+ `*` 表示这是一个 Generator 函数,返回一个含有`next`方法的对象
+
+` yield` 暂停代码
+
+ `next` 恢复执行被暂停的代码
+```javascript
+
+function* test() {
+  let a = 1 + 2;
+  yield 2;
+  yield 3;
+}
+let b = test();
+console.log(b.next()); // >  { value: 2, done: false }
+console.log(b.next()); // >  { value: 3, done: false }
+console.log(b.next()); // >  { value: undefined, done: true }
+```
+## 3. async 和 await
+`async` 使函数返回值使用 Promise.resolve() 包裹
+
+`await` 只能在 `async `函数中使用,且会等待函数` resolve`,阻塞之后的代码（即使是同步）
+
+很好的处理` then `的调用链，能够更清晰准确的写出代码
+```javascript
+function sleep() {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      console.log('finish')
+      resolve("sleep");
+    }, 2000);
+  });
+}
+async function test() {
+  let value = await sleep();
+  console.log("object");
+}
+test()
+// finish
+// object
+```
+# XII. 正则表达式
+## 1. 元字符
+| 元字符 | 作用 |
+| :------: | :------: |
+| `.` | 匹配任意字符除了换行符和回车符 |
+| `[]` | 匹配方括号内的任意字符。比如 [0-9] 就可以用来匹配任意数字 |
+| `^` | ^9，这样使用代表匹配以 9 开头。[^9]，这样使用代表不匹配方括号内除了 9 的字符 |
+|`{2, 4}`|匹配 2 到 4 位字符|
+|`(goozyshi)`|只匹配goozyshi|
+|`|`|匹配 `|` 前后的字符或者表达式|
+|`\`|转义|
+|`*`|匹配`*`之前的字符或者表达式0次以上|
+|`+`|匹配`+`之前的字符或者表达式1次以上|
+|`?`|匹配`?`之前的字符或者表达式0次或者1次|
+
+## 2. 修饰语
+|修饰语|作用|
+|:---:|:---:|
+|`i`|忽略大小写|
+|`g`|全局|
+|`m`|多行|
+
+## 3. 字符简写
+|简写|作用|
+|:---:|:---:|
+|`\w`|匹配字母数字或下划线|
+|`\W`|与上面相反|
+|`\s`|匹配任意的空白符|
+|`\S`|与上面相反|
+|`\d`|匹配数字|
+|`D`|与上面相反|
+|`\b`|匹配单词的开始或结束|
+|`\B`|与上面相反|
