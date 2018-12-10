@@ -152,7 +152,6 @@
   */
   function remove (x){
     var pre = this.findValue(x, true);
-    if(!pre)console.log(`ss`)
     pre.next = pre.next.next;
   }
 
