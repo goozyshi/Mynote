@@ -110,10 +110,71 @@
  /**
  * 循环链表类
  */
-  function ClinkList (){
+  function CLinkList (){
     this.head = new Node('head');
     this.head.next = this.head; // 头指针指向自己
     this.findValue = findValue; // 查找 当前/前一 节点
     this.insert = insert; // 在某节点后插入
+    this.remove = remove;// 找到删除前一节点，然后进行删除
+    this.display = display;// 展示
   }
+
+  /**
+  * 查找
+  * 检查到头节点时退出循环
+  */
+  function findValue(x, pre){
+    var current = this.head;
+    if(pre){
+      while ( !(current.next == null) && !(current.next.element == x)){
+        current = current.next;
+      }
+    }else {
+      while (!(current.next == null) && !(current.element == x)){
+        current = current.next;
+      }
+    }
+    return current;
+  }
+
+  /**
+  * 插入
+  */
+  function insert (x,val){
+    var nNode = new Node(x);
+    var current = this.findValue(val);
+    nNode.next = current.next;
+    current.next = nNode;
+  }
+
+  /**
+  * 删除
+  */
+  function remove (x){
+    var pre = this.findValue(x, true);
+    if(!pre)console.log(`ss`)
+    pre.next = pre.next.next;
+  }
+
+  /**
+  * 展示
+  */
+  function display (){
+    var current = this.head;
+    var result = [];
+    while(!(current.next.element == "head")){
+      result.push(current.element)
+      current = current.next;
+    }
+    if (current.next.element == "head"){
+      result.push(current.element+'->head')
+    }
+    return result.join('->')
+  }
+  var CL = new CLinkList();
+  CL.insert(1, 'head');
+  CL.insert(2, 1);
+  CL.insert(3, 2);
+  CL.remove(2);
+  CL.display();
 ```
