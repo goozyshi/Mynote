@@ -43,24 +43,26 @@ function PolySum (p, arr, x){
 }
 ```
 ## eg.3 二分查找
-给定一个`已排序`的数组arr和待查找数num,找到num在arr中的下标，没有则返回-1.
+`有序数组`arr和待查找数num,找到num在arr中的下标，没有则返回-1.
+
+`left`的更新取`mid+1`；
+
+`right`的更新取`mid-1`；
 ```javascript
 function HalfScan (arr, num){
   var l = 0;
   var r = arr.length-1;
-  // 避免Math.round得到重复值
-  if( arr[l] == num){return l;}
-  if( arr[r] ==num){return r;}
   for (var i = 0; i<arr.length -1 ; i++){
     var m = Math.round((l+r)/2)
     if ( arr[m] < num ){
-      l = m ;
+      l = m+1 ;
     }else if ( arr[m] > num){
-      r = m;
+      r = m-1;
     }else {
       return m;
     }
   }
+  console.log(`搜索结束，没找到`)
 }
 ```
 ## eg.4 最大子列和（在线处理）
