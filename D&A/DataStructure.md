@@ -49,20 +49,20 @@ function PolySum (p, arr, x){
 
 `right`的更新取`mid-1`；
 ```javascript
-function HalfScan (arr, num){
-  var l = 0;
-  var r = arr.length-1;
-  for (var i = 0; i<arr.length -1 ; i++){
-    var m = Math.round((l+r)/2)
-    if ( arr[m] < num ){
-      l = m+1 ;
-    }else if ( arr[m] > num){
-      r = m-1;
+function HalfSearch (arr, x){
+  let l = 0;
+  let r = arr.length-1;
+  while (l <= r){
+    m = Math.round((l+r)/2);
+    if( arr[m] > x){
+      r = m -1;
+    }else if( arr[m] < x){
+      l = m+1;
     }else {
       return m;
     }
   }
-  console.log(`搜索结束，没找到`)
+  console.log(`搜索结束，并未找到`)
 }
 ```
 ## eg.4 最大子列和（在线处理）
