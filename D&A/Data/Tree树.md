@@ -23,42 +23,13 @@ n=0,为空树
 ## 二叉树性质
 ![tree_qua](../tree_qua.png)
 ## 二叉树操作
-- 判空
 - 遍历（递归实现）
 >优化： 使用堆栈把递归变成非递归
   - 先序：根-左子树-右子树
-  ```javascript
-    function Porder (node){
-      if(node){
-        console,log(node.data)
-        Porder(node.left)
-        Porder(node.right)
-      }
-    }
-  ```
   - 中序：左子树-根-右子树
-  ```javascript 
-    function Inorder (node){
-      if(node){
-        Inorder(node.left)
-        console,log(node.data)
-        InOrder(node.right)
-      }
-    }
-  ```
   - 后序：左子树-右子树-根
-  ```javascript
-      function Lorder (node){
-      if(node){
-        Lorder(node.left)
-        LOrder(node.right)
-        console,log(node.data)
-      }
-    }
-  ```
 >优化： 使用队列把递归变成非递归
   - 层次：从上到下，从左到右
-- 创建
 
 ## 题目
 1. 输出所有叶子结点
@@ -85,10 +56,13 @@ function treeNode (data, left, right){
 */
 function BinaryTree (){
   this.root = null; 
-  this.insert = insert;
+  this.insert = insert; // 插入
   this.Porder = Porder; // 先序遍历
   this.inorder = inorder; // 中序遍历
   this.Lorder = Lorder; // 后序遍历
+  this.find = find; // 查找
+  this.getmin = getmin; // 获取最小值
+  this.getmax = getmax; // 获取最大值
 }
 
 /**
@@ -158,6 +132,47 @@ function Lorder (node){
     Lorder(node.left)
     Lorder(node.right)
     console.log(node.data+" ")
+  }
+}
+
+/**
+*最小值
+* 最后一个左子树
+*/
+function getmin (){
+  var current = this.root;
+  while(current.left != null){
+    current = current.left;
+  }
+  return current.data;
+}
+
+/**
+* 最大值
+* 最后一个右子树
+*/
+function getmax (){
+  var current = this.root;
+  while(current.right != null){
+    current = current.right;
+  }
+  return current.data;
+}
+
+/**
+* 查找
+* 从根结点出发，小的往左大的往右
+*/
+function find (x){
+  var current = this.root;
+  while(current != null){
+    if(current.data > x){
+      current = current.left;
+    }else if(current.data < x){
+      current = current.right;
+    }else {
+      return current;
+    }
   }
 }
 var bst = new BinaryTree();
