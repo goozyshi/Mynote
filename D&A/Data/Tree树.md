@@ -1,9 +1,6 @@
 # 树
-一个`n`个结点的树有`n-1`条边
+>高效的插入删除以及查找
 
-n=0,为空树
-
-`n`个结点的判定树的深度为`[log2n] + 1`
 
 ## 相关术语
 |术语|备注|
@@ -17,9 +14,13 @@ n=0,为空树
 |路径和路径长度|从结点A到Bd的路径为一个序列,路径所包含的边即为路径的长度|
 |树的深度|树中结点的最大层次|
 
+一个`n`个结点的树有`n-1`条边
+
+n=0,为空树
+
+`n`个结点的判定树的深度为`[log2n] + 1`
 # 二叉树
-## 特殊二叉树
-![tree_spa](../tree_spa.png)
+![tree](../tree.png)
 ## 二叉树性质
 ![tree_qua](../tree_qua.png)
 ## 二叉树操作
@@ -31,15 +32,9 @@ n=0,为空树
 >优化： 使用队列把递归变成非递归
   - 层次：从上到下，从左到右
 
-## 题目
-1. 输出所有叶子结点
-2. 二叉树的高度
-3. 二元表达式
 
-# 二叉树
-高效的插入删除以及查找
+# 链表实现BST(二叉查找树)
 
-二叉查找树（BinaryTree）
 ```javascript
 /**
 *树的结点类
@@ -54,24 +49,22 @@ function treeNode (data, left, right){
 * 二叉查找树类
 * 初始根结点指向null，创建一个空结点
 */
-function BinaryTree (){
+function BinarySearchTree (){
   this.root = null; 
   this.insert = insert; // 插入
   this.Porder = Porder; // 先序遍历
   this.inorder = inorder; // 中序遍历
   this.Lorder = Lorder; // 后序遍历
   this.find = find; // 查找
-  this.getmin = getmin; // 获取最小值
-  this.getmax = getmax; // 获取最大值
+  this.remove = remove; // 删除
 }
 
 /**
-* 插入
-* 为传入的data创建一个树结点
-* 若BinaryTree的根结点为null，新结点为根结点
-* 否则，用一个变量存储当前结点，循环遍历
-* 插入的数据小于当前结点，设置当前结点为原结点的左结点（大于设为右结点）
-* 当前左结点为null，插入并退出，否则进入下一次循环
+* 插入，为传入的data创建一个树结点
+* 1. 根结点为null，新结点为根结点
+* 2. 用一个变量存储当前结点，循环遍历
+* 3. 插入的数据小于当前结点，设置当前结点为原结点的左结点（大于设为右结点）
+* 4. 当前左结点为null，插入并退出，否则进入下一次循环
 */
 function insert (data){
   var n =  new treeNode(data, null, null);
@@ -136,52 +129,82 @@ function Lorder (node){
 }
 
 /**
-*最小值
-* 最后一个左子树
-*/
-function getmin (){
-  var current = this.root;
-  while(current.left != null){
-    current = current.left;
-  }
-  return current.data;
-}
-
-/**
-* 最大值
-* 最后一个右子树
-*/
-function getmax (){
-  var current = this.root;
-  while(current.right != null){
-    current = current.right;
-  }
-  return current.data;
-}
-
-/**
 * 查找
-* 从根结点出发，小的往左大的往右
+* 1. 从根结点出发，小的往左大的往右
+* 2. 最小值： 最后一个左子树
+* 3. 最大值： 最后一个右子树
 */
-function find (x){
+function find (type, x){
   var current = this.root;
-  while(current != null){
-    if(current.data > x){
+  if(type == null){
+    while(current != null){
+      if(current.data > x){
+        current = current.left;
+      }else if(current.data < x){
+        current = current.right;
+      }else {
+        return current;
+      }
+    }
+  }else if(type == 'min'){
+    while(current.left != null){
       current = current.left;
-    }else if(current.data < x){
+    }
+    return current.data;
+  }else if(type == 'max'){
+    while (current.right != null){
       current = current.right;
+    }
+    return current.data;
+  }
+}
+
+/**
+* 删除
+* 1. 根节点开始，判断是否含有待删除数据，没有则继续遍历（小往左大往右），直到找到待删除节点
+* 2. 没有子节点： 将父节点指向他的节点指向null
+* 3. 只有一个节点： 使其父节点指向其子节点
+* 4. 两个子节点：
+*  4.1 查找待删除节点左（右）子树上的最大（小）值
+*  4.2 用找到的值创建一个临时节点,将临时值赋给待删除节点再删除临时节点
+*/
+function remove (data){
+  root = removeNode(this.root, data);
+}
+
+function removeNode (node, data){
+  if(node){ // 判空
+    if(node.data == data){
+      if(node.left == null && node.right == null){// 没有子节点
+        return null;
+      }else if(node.left == null){// 只有右节点
+        return node.right;
+      }else if (node.right == null){// 只有左节点
+        return node.left;
+      }else { // 有两个节点
+        var tempNode = find('min', node.right);
+        node.data = tempNode.data;
+        node.right = removeNode(node.right, tempNode.data);
+        return node;
+      }
+    }else if (data < node.data) {
+      node.left = removeNode(node.left, data);
+      return node;
     }else {
-      return current;
+      node.right = removeNode(node.right, data);
+      return node;
     }
   }
 }
-var bst = new BinaryTree();
+var bst = new BinarySearchTree();
 bst.insert(12)
 bst.insert(10)
 bst.insert(11)
 bst.insert(32)
 bst.insert(26)
-bst.Porder(bst.root) // 12 10 11 32 26
 bst.inorder(bst.root) // 10 11 12 26 32
-bst.Lorder(bst.root) // 11 10 26 32 12
 ```
+## 题目
+1. 输出所有叶子结点
+2. 二叉树的高度
+3. 二元表达式
