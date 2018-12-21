@@ -23,18 +23,9 @@ n=0,为空树
 ![tree](../tree.png)
 ## 二叉树性质
 ![tree_qua](../tree_qua.png)
-## 二叉树操作
-- 遍历（递归实现）
->优化： 使用堆栈把递归变成非递归
-  - 先序：根-左子树-右子树
-  - 中序：左子树-根-右子树
-  - 后序：左子树-右子树-根
->优化： 使用队列把递归变成非递归
-  - 层次：从上到下，从左到右
 
-
-# 链表实现BST(二叉查找树)
-
+# 链表实现
+## 二叉查找树
 ```javascript
 /**
 *树的结点类
@@ -81,50 +72,17 @@ function insert (data){
           parent.left = n;
           break;
         }
-      }else {
+      }else if(data > current.data){
         current = current.right;
         if(current == null){
           parent.right = n;
           break;
         }
+      }else {
+        console.log(`相逢`)
+        return;
       }
     }
-  }
-}
-
-/**
-* 先序遍历
-* 根-左子树-右子树
-*/
-function Porder(node){
-  if(node){
-    console.log(node.data)
-    Porder(node.left)
-    Porder(node.right)
-  }
-}
-
-/**
-* 中序遍历
-* 左子树和-根-右子树
-*/
-function inorder (node){
-  if(node){
-    inorder (node.left)
-    console.log(node.data)
-    inorder(node.right)  
-  }
-}
-
-/**
-* 后序遍历
-* 左子树-右子树-根
-*/
-function Lorder (node){
-  if(node){
-    Lorder(node.left)
-    Lorder(node.right)
-    console.log(node.data+" ")
   }
 }
 
@@ -202,9 +160,43 @@ bst.insert(10)
 bst.insert(11)
 bst.insert(32)
 bst.insert(26)
+```
+## 二叉树的三种遍历
+```javascript
+/**
+* 先序遍历
+* 根-左子树-右子树
+*/
+function Porder(node){
+  if(node){
+    console.log(node.data)
+    Porder(node.left)
+    Porder(node.right)
+  }
+}
+
+/**
+* 中序遍历
+* 左子树和-根-右子树
+*/
+function inorder (node){
+  if(node){
+    inorder (node.left)
+    console.log(node.data)
+    inorder(node.right)  
+  }
+}
+
+/**
+* 后序遍历
+* 左子树-右子树-根
+*/
+function Lorder (node){
+  if(node){
+    Lorder(node.left)
+    Lorder(node.right)
+    console.log(node.data+" ")
+  }
+}
 bst.inorder(bst.root) // 10 11 12 26 32
 ```
-## 题目
-1. 输出所有叶子结点
-2. 二叉树的高度
-3. 二元表达式
