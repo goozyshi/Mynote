@@ -100,4 +100,3 @@ function MaxSub(arr){
 }
 ```
 ## eg.5 多项式求和
-![twopoly](./twopoly.png)
