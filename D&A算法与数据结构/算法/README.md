@@ -1,5 +1,16 @@
-# 排序
-## 说明
+- [排序](#排序)
+  - [说明](#说明)
+  - [1. 基本排序](#1-基本排序)
+  - [2. 高级排序（大数据）](#2-高级排序大数据)
+- [查找](#查找)
+- [高级算法](#高级算法)
+  - [动态规划](#动态规划)
+    - [斐波那契](#斐波那契)
+    - [最长公共子串](#最长公共子串)
+  - [贪心算法](#贪心算法)
+
+## 排序
+### 说明
 - 稳定：如果a原本在b前面，而a=b，排序之后a仍然在b的前面；
 - 不稳定：如果a原本在b的前面，而a=b，排序之后a可能会出现在b的后面；
 - 内排序：所有排序操作都在内存中完成；
@@ -14,13 +25,11 @@
 ```js
 var str = '76 69 64 4 64 73 47 34 65 93 32';
 var arr = str.split(' ').map((i)=>parseInt(i));
-
-var arr =[]
-for(var i=0; i<10; i++){
-  arr.push(Math.floor(Math.random()*100));
-}
-console.log(arr)
-
+// var arr =[]
+// for(var i=0; i<10; i++){
+//   arr.push(Math.floor(Math.random()*100));
+// }
+// console.log(arr)
 function bubbleSort(arr) {
   console.time()
   for(var i = 0; i<arr.length-2; i++){
@@ -185,5 +194,84 @@ function binSearch (arr, x){
 ```
 ## 高级算法
 - ### 动态规划
-  使用递归方案能解决的问题，都能够使用动态规划技巧来解决，而且还能够提高程序的执行效率。
-- ### 贪心算法
+  >使用递归方案能解决的问题，都能够使用动态规划技巧来解决，而且还能够提高程序的执行效率。
+
+  动态规划设计的算法从它能解决的最简单的子问题开始， 继而通过得到的解， 去解决其他更复杂的子问题， 直到整个问题都被解决。 所有子问题的解通常被存储在一个数组里以便于访问。
+  1. 实现斐波那契数列
+  - 创建一个长度为n的空数组
+  - 从a[2]开始循环赋值到a[n],a[n]即为解。
+  ```js
+  function dynFib(n){
+    if(n<=2){
+      return 1;
+    }else {
+      var result = Array(n);
+      result[0] = 1;
+      result[1] = 1;
+      for(var i = 2; i<n; i++){
+        result[i] = result[i-1] + result[i-2];// 赋值
+      }
+      return result[n-1];
+    }
+  }
+  console.time();
+  console.log(dynFib(300));//  0.2119140625ms快的一批
+  console.timeEnd()
+  ```
+  2. 寻找最长公共子串  [理解](https://segmentfault.com/a/1190000007963594)
+  ```js
+  function dynLCS(str1, str2){
+    var lcsarr = [];
+    var max = 0;
+    var ans = [];
+    var x = 0, y = 0;
+
+    // 1. 创建二维数组-空
+    for(var i = 0; i<str1.length; i++){
+      lcsarr[i] = new Array(str2.length)
+    };
+    // 2. 相等状态下其左上角不存在则赋值为1，否则等于所有左上角相加之和,便于找出最长的子串
+    for(var i = 0; i<str1.length; i++){
+      for(var j =0; j<str2.length; j++){
+        if(str1[i]!= str2[j]){
+          lcsarr[i][j] = 0;
+        }else {
+          if(i-1<0 || j-1<0){
+            lcsarr[i][j] = 1;
+          }else{
+            lcsarr[i][j] = lcsarr[i-1][j-1]+1;
+          }
+          if(max < lcsarr[i][j]){// 获取最大值的坐标
+            max = lcsarr[i][j];
+            x = i;
+            y = j;
+          }
+        }
+      }
+    };
+    console.log(lcsarr);
+    // 3. 倒序输出结果
+    while(lcsarr[x][y] != 0){
+      ans.push(str1[x]);
+      console.log(x,y)
+      x--;
+      y--;
+      if(x<0||y<0){
+        break;
+      }
+    }
+    return ans.reverse().join('');
+  }
+  dynLCS('abcdefg','xyzabcd');//  "abcd"
+  /*
+  0: (7) [0, 0, 0, 1, 0, 0, 0]
+  1: (7) [0, 0, 0, 0, 2, 0, 0]
+  2: (7) [0, 0, 0, 0, 0, 3, 0]
+  3: (7) [0, 0, 0, 0, 0, 0, 4]
+  4: (7) [0, 0, 0, 0, 0, 0, 0]
+  5: (7) [0, 0, 0, 0, 0, 0, 0]
+  6: (7) [0, 0, 0, 0, 0, 0, 0]
+  */
+  ```
+- ### 贪心算法(最优解)
+![](./img/bag.png)
