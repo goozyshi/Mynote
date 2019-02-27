@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>jquery学习</title> 
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js">// 引入jQ
+</script>
+
+<script>
+$(document).ready(function(){// 防止文档在完全加载前运行 jQuery 代码
+  $('p').click(function(){
+    $(this).hide();
+  });
+});
+// $(function(){// 简写
+//   $("p").click(function(){
+//     $(this).hide();
+//   });
+// });
+</script>
+
+</head>
+<body>
+<p>如果你点我，我就会消失。</p>
+<p>继续点我!</p>
+<p>接着点我!</p>
+</body>
+</html>
