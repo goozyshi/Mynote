@@ -59,4 +59,9 @@ $(selector).`slideToggle`(speed,callback)：向上/向下切换
     `stopAll`: 可选，是否应该清除所有动画队列。默认是 false，即仅停止活动的动画，允许任何排入队列的动画向后执行。
 
     `goToEnd`：可选，是否立即完成当前动画。默认是 false。
+## 三. HTML
+- DOM操作
+  - text() - 设置或返回所选元素的文本内容
+  - html() - 设置或返回所选元素的内容（包括 HTML 标记）
+  - val() - 设置或返回表单字段的值
 
