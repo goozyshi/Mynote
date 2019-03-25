@@ -5,7 +5,9 @@
 - 网络层：数据在结点间传输创建逻辑链路，单位是`包（packet）`，协议有`IP协议`。
 - 传输层： 提供处于网络连接中的两台计算机之间的数据传输。如`TCP、UDP协议`。
 - 应用层： 决定了向用户提供应用服务时通信的活动,如`HTTP、FTP协议、DNS服务`。
+
 ![](./img/wlxyfc.png)
+
 ### 2. HTTP协议发展历史
 HTTP/0.9
   - 只有`GET`命令
@@ -62,6 +64,7 @@ URL是URI的子集，所有的URL都是URI，但不是每个URI都是URL，还�
   格式如：`HTTP-Version(服务器HTTP协议的版本) Status-Code(状态码) Reason-Phrase(状态代码的文本描述) CRLF(空行)`
 - 响应头： 同请求头
 - 报文主体：响应的数据
+
 ![](./img/bw.png)
 
 4.3 方法
@@ -108,3 +111,7 @@ URL是URI的子集，所有的URL都是URI，但不是每个URI都是URL，还�
   - `500 Internal Server Error`：服务器端在执行请求时发生了错误。也有可能是 Web应用存在的 bug 或某些临时的故障
   - `503 Service Unavailable`：服务器目前无法使用（由于超载或停机维护）。通常，这只是暂时状态。
 
+## HTTP 特性
+使用 curl/ 浏览器devtools 命令查看 responese 信息
+
+![](./img/curl.png)
