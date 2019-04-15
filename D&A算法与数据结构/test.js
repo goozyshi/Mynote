@@ -1,16 +1,21 @@
 /**
- * @param {number[]} nums
- * @param {number} target
+ * @param {number[]} digits
  * @return {number[]}
  */
-var twoSum = function(nums, target) {
-	var map = {}
-	for (let i = 0; i < nums.length; i++) {
-		let goal = target - nums[i];
-		if(map.has(goal)){
-			return [ map.get(goal), i]
+var plusOne = function(digits) {
+    for (let i = digits.length-1; i >=0;) {
+			let x = digits[i] +1;
+			console.log('digits', digits)
+			if(x<10){
+				digits[i]=x
+				return digits;
+			}else {
+				digits[i]=0
+				if(i==0){
+					digits.unshift(1)
+					return digits
+				}
+				i--;
+			}
 		}
-		map.set(nums[i],i)
-		console.log(map)
-	}
 };
