@@ -291,7 +291,7 @@ var sortColors = function(nums) {
 ```
 **【另一种】**
 ```js
-/** 快排思想，一趟扫描。从左到右遍历，小于 1 的放在左边start，大于 1 的放在右边end。
+/**思路：快排思想，一趟扫描。从左到右遍历，小于 1 的放在左边start，大于 1 的放在右边end。
  * @时间复杂度 O(n)
  * @空间复杂度 O(1)
  */
@@ -316,5 +316,53 @@ var sortColors = function(nums) {
         nums[end--] = temp; 
     }
   }
+};
+```
+## 20190415
+### [1. Two Sum](https://leetcode.com/problems/two-sum/)
+给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。
+
+你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
+
+示例:
+```
+给定 nums = [2, 7, 11, 15], target = 9
+
+因为 nums[0] + nums[1] = 2 + 7 = 9
+所以返回 [0, 1]
+```
+**【解决】**
+```js
+/**思路：两次循环，返回相加为 target 的两个值的下标
+ * @时间复杂度 O(n^2)
+ * @空间复杂度 O(1)
+ */
+var twoSum = function(nums, target) {
+for (let i = 0; i < nums.length; i++) {
+	let goal = target - nums[i];
+	for (let j = i+1; j < nums.length; j++) {
+		if(nums[j] === goal){
+			return [i,j]
+		}
+	}
+}
+};
+```
+**【另一种】**
+```js
+/**思路：使用哈希表一次遍历，再[7,2,8,9],10 这一组合中，一开始7=>0,2=>1,到8的时候，goal = 2, find = map[2] = 1.所以返回 [1，2]
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(n)
+ */
+var twoSum = function(nums, target) {
+	var map = {}
+	for (let i = 0; i < nums.length; i++) {
+		let goal = target - nums[i];
+		let find = map[goal]
+		if(find !== undefined){
+			return [ find, i]
+		}
+		map[nums[i]]=i
+	}
 };
 ```
