@@ -411,7 +411,7 @@ var plusOne = function(digits) {
 };
 ```
 ## 20190416
-### [Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
+### [167.Two Sum II - Input array is sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
 给定一个已按照升序排列 的有序数组，找到两个数使得它们相加之和等于目标数。
 
 函数应该返回这两个下标值 index1 和 index2，其中 index1 必须小于 index2。
@@ -459,3 +459,103 @@ var twoSum = function(numbers, target) {
   }
 };
 ```
+## 20190417
+### [88. Merge Sorted Array](https://leetcode.com/problems/merge-sorted-array/)
+给定两个有序整数数组 nums1 和 nums2，将 nums2 合并到 nums1 中，使得 num1 成为一个有序数组。
+
+说明:
+- 初始化 nums1 和 nums2 的元素数量分别为 m 和 n。
+- 你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。
+示例:
+```
+输入:
+nums1 = [1,2,3,0,0,0], m = 3
+nums2 = [2,5,6],       n = 3
+
+输出: [1,2,2,3,5,6]
+```
+**【解决】**
+```js
+/** 思路： nums1数组从 m到 m+n 位置赋值为nums2中的值，之后排序nums1
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var merge = function(nums1, m, nums2, n) {
+  var p = 0;
+  for(var i = m;i<m+n;i++){
+    nums1[i]=nums2[p++]
+  }
+  p=0;
+  nums1.sort((a,b)=>a-b)
+  return nums1
+};
+
+```
+**【另一种】**
+```js
+/** 思路： 因为都是已排序数组，从后往前遍历赋值。
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var merge = function(nums1, m, nums2, n) {
+	var total = m+n-1;
+	var i = m-1;
+	var j = n-1;
+	while(i>=0 && j>=0){
+		nums1[total--] = (nums1[i] > nums2[j]) ? nums1[i--] : nums2[j--]
+	}
+};
+```
+## 20190419
+### [231. Power of Two](https://leetcode.com/problems/power-of-two/)
+给定一个整数，编写一个函数来判断它是否是 2 的幂次方。
+
+示例 1:
+```
+输入: 16
+输出: true
+解释: 2^4 = 16
+```
+**【One for All】**
+同理还能解决：
+
+[326. Power of Three](https://leetcode.com/problems/power-of-three/)
+
+[342. Power of Four](https://leetcode.com/problems/power-of-four/)
+```js
+/** 思路： 换底公式牛批。一个数是2的幂那么幂一定是整数。2^power=n, power=log2(n),换底后log2(n)=log10(n)/log10(2)
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var isPowerOfTwo = function(n) {
+    return Math.log10(n)/Math.log10(2)%1==0
+};
+```
+
+### [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+18号补做。
+
+在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+
+示例 1:
+```
+输入: [3,2,1,5,6,4] 和 k = 2
+输出: 5
+```
+
+说明:
+
+你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。
+
+**【解决】**
+```js
+/** 思路： 排序，查询
+ * @时间复杂度 O(nlogn)
+ * @空间复杂度 O(1)
+ */
+var findKthLargest = function(nums, k) {
+	nums.sort((a,b)=>b-a)
+	return nums[k-1]
+};
+```
+**【想用快拍没搞懂……】**
