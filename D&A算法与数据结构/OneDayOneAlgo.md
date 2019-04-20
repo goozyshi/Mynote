@@ -459,3 +459,81 @@ var twoSum = function(numbers, target) {
   }
 };
 ```
+## 20190420
+### [125. Valid Palindrome](https://leetcode.com/problems/valid-palindrome/)
+给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+
+说明：本题中，我们将空字符串定义为有效的回文串。
+
+示例 1:
+```
+输入: "A man, a plan, a canal: Panama"
+输出: true
+```
+**【解决】**
+```js
+/** 思路： 正则校验只留下英文数字，全部转为小写/大写。反转判断。
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var isPalindrome = function(s) {
+  if(s.length == 0) {
+    return true
+  }
+  let reg = /[^A-Za-z\d]/g;
+  s = s.replace(reg, "").toLocaleLowerCase()
+  let text = s.split('').reverse().join('')
+  return s === text
+};
+```
+**【另一种】**
+```js
+/** 思路： 头尾遇到英文数字时进行转大小写之后再比较，更快
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var isPalindrome = function(input) {
+    var start = 0
+    var end = input.length - 1
+    while (start < end) {
+        var s = input.charCodeAt(start)
+        var e = input.charCodeAt(end)
+    
+        if (!isLetter(s)) {
+            start++
+            continue
+        }
+        if (!isLetter(e)) {
+            end--
+            continue
+        }
+    
+        if (toLowerCase(s) !== toLowerCase(e)) {
+            return false 
+        } 
+        start++
+        end--
+  }
+  return true
+};
+
+var isLetter = function(code) {
+    if (((code >= 48) && (code <= 57))  // numbers
+    || ((code >= 65) && (code <= 90))  // uppercase
+    || ((code >= 97) && (code <= 122))) {  // lowercase
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+var toLowerCase = function(code) {
+    if (code >= 65 && code <= 90) {
+        return code + 32    
+    }
+    else {
+        return code
+    }
+}
+```
