@@ -716,3 +716,191 @@ var containsDuplicate = function(nums) {
 };
 ```
 **【另一种】**
+## 20190425
+### [724. Find Pivot Index](https://leetcode.com/problems/find-pivot-index/)
+给定一个整数类型的数组 nums，请编写一个能够返回数组“中心索引”的方法。
+
+我们是这样定义数组中心索引的：数组中心索引的左侧所有元素相加的和等于右侧所有元素相加的和。
+
+如果数组不存在中心索引，那么我们应该返回 -1。如果数组有多个中心索引，那么我们应该返回最靠近左边的那一个。
+
+示例 1:
+```
+输入: 
+nums = [1, 7, 3, 6, 5, 6]
+输出: 3
+解释: 
+索引3 (nums[3] = 6) 的左侧数之和(1 + 7 + 3 = 11)，与右侧数之和(5 + 6 = 11)相等。
+同时, 3 也是第一个符合要求的中心索引。
+```
+示例 2:
+```
+输入: 
+nums = [1, 2, 3]
+输出: -1
+解释: 
+数组中不存在满足此条件的中心索引。
+```
+**【解决】**
+```js
+/** 思路： 先计算 i=0 位置元素的左右和，随着i的右移，左边加上i位置，右边减去i位置。避免重复计算
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var pivotIndex = function(nums) {
+  if(nums.length === 0){
+    return -1
+  }
+  let L = 0;
+  let R = 0;
+  let total = 0;
+  total=nums.reduce((x,y)=>x+y)
+  R = total-L-nums[0]
+  for (let i = 0; i < nums.length; i++) {
+    if(L!=R){
+      L+=nums[i]
+      R-=nums[i+1]
+    }else {
+      return i
+    }
+  }
+  return -1
+};
+```
+**【解决】**
+```js
+/** 思路： 只要找到符合 X+nums[i]+X=total 的 nums[i] 就行
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var pivotIndex = function(nums) {
+  if(nums.length === 0){
+    return -1
+  }
+  let L = 0;
+  let total = 0;
+  total=nums.reduce((x,y)=>x+y)
+  for (let i = 0; i < nums.length; i++) {
+    if(total-nums[i] === L*2){
+      return i
+    }
+    L+=nums[i]
+  }
+  return -1
+};
+```
+**补做【24号】**
+### [747. Largest Number At Least Twice of Others](https://leetcode.com/problems/largest-number-at-least-twice-of-others/)
+在一个给定的数组nums中，总是存在一个最大元素 。
+
+查找数组中的最大元素是否至少是数组中每个其他数字的两倍。
+
+如果是，则返回最大元素的索引，否则返回-1。
+
+示例 1:
+```
+输入: nums = [3, 6, 1, 0]
+输出: 1
+解释: 6是最大的整数, 对于数组中的其他整数,
+6大于数组中其他元素的两倍。6的索引是1, 所以我们返回1.
+```
+**【解决】**
+```js
+/** 思路： 哈希表排序后比较返回
+ * @时间复杂度 O(nlogn)
+ * @空间复杂度 O(n)
+ */
+var dominantIndex = function(nums) {
+  if(nums.length <2){
+    return 0
+  }
+  var hash={}
+  for (let i = 0; i < nums.length; i++) {
+    if(hash[nums[i]] === undefined){
+      hash[nums[i]]=i
+    }
+  }
+  var arr = Object.keys(hash).sort((a,b)=>a-b)
+  let max = arr.length-1;
+  if(arr[max]>=2*arr[max-1]){
+    return hash[arr[max]]
+  }else {
+    return -1
+  }
+};
+```
+**【另一种】**
+```js
+/** 思路： 遍历一遍记录最大值和第二大，返回比较
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var dominantIndex = function(nums) {
+  if(nums.length <2){
+    return 0
+  }
+  let max = 0;
+  let max_2 = 0;
+  let max_index = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] > max) {
+      max_2 = max;
+      max = nums[i];
+      max_index = i;
+  } else if (nums[i] > max_2) {
+      max_2 = nums[i];
+  }
+  }
+  return max<2*max_2?-1:max_index
+};
+```
+**补做【23号】**
+### [485. Max Consecutive Ones](https://leetcode.com/problems/max-consecutive-ones/)
+给定一个二进制数组， 计算其中最大连续1的个数。
+
+示例 1:
+```
+输入: [1,1,0,1,1,1]
+输出: 3
+解释: 开头的两位和最后的三位都是连续1，所以最大连续1的个数是 3.
+```
+**【解决】**
+```js
+/** 思路： 计数
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var findMaxConsecutiveOnes = function(nums) {
+  var count = 0;
+  var result = 0;
+  for(let i=0; i<nums.length; i++){
+      if(nums[i]===1){
+          count++
+          if(count>result)result = count
+      }else{
+          count=0
+      }
+  }
+  return result
+};
+```
+**另一种**
+```js
+/** 思路： 计数——优化代码
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var findMaxConsecutiveOnes = function(nums) {
+  var count = 0;
+  var result = 0;
+  for(let i=0; i<nums.length; i++){
+      if(nums[i]===1){
+          count++
+          result = Math.max(result,count)
+      }else{
+          count=0
+      }
+  }
+  return result
+};
+```

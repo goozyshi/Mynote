@@ -1,12 +1,13 @@
 /**
  * @param {number[]} nums
- * @return {boolean}
+ * @return {number}
  */
-var containsDuplicate = function(nums) {
-  for (let i = 0; i < nums.length; i++) {
-    if(nums.indexOf(nums[i])!=-1){
-      return true
-    }
+var findMaxConsecutiveOnes = function(nums) {
+  var count = 0;
+  var result = 0;
+  for(let i=0; i<nums.length; i++){
+    result = result & nums[i]
+    if result
   }
-  return false
+
 };
