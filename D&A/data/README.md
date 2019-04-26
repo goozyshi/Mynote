@@ -1,20 +1,3 @@
---- 
-title: 数据结构基础
-tags:
- - 数据结构
-categories: dataStructure
-date: 2019-03-24
-prev: false
-next: ./tree
-sidebar: auto
-author: goozyshi
-isComment: false
----
-::: tip 概览
-二叉树的深度、广度遍历
-:::
-<!-- more -->
-
 ## 数组
 ### 一.存取函数
  1.  查找元素——`indexOf()`

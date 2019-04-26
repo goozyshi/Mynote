@@ -2,12 +2,17 @@
  * @param {number[]} nums
  * @return {number}
  */
-var findMaxConsecutiveOnes = function(nums) {
-  var count = 0;
-  var result = 0;
-  for(let i=0; i<nums.length; i++){
-    result = result & nums[i]
-    if result
+var removeDuplicates = function(nums) {
+  if(!nums){
+    return;
   }
-
+  var p = 0;
+  for(var i=1; i<nums.length; i++){
+    if(nums[i]>nums[p]){
+      nums[++p]=nums[i]
+    }else{
+      continue;
+    }
+  }
+  return p+1;
 };
