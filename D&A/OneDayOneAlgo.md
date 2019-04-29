@@ -941,3 +941,149 @@ var rotate = function(nums, k) {
     nums.splice(0,0,...a)
 };
 ```
+## 20190429
+### [387. First Unique Character in a String](https://leetcode.com/problems/first-unique-character-in-a-string/)
+给定一个字符串，找到它的第一个不重复的字符，并返回它的索引。如果不存在，则返回 -1。
+
+案例:
+```
+s = "leetcode"
+返回 0.
+
+s = "loveleetcode",
+返回 2.
+```
+**【解决】**
+```js
+/** 思路： 库函数偷懒
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var firstUniqChar = function(s) {
+  for (let i = 0; i < s.length; i++) {
+    if(s.indexOf(s[i]) === s.lastIndexOf(s[i]) ){
+      return i
+    }
+  }
+  return -1
+};
+```
+**【另一种】**
+```js
+/** 思路：哈希表
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(n)
+ */
+var firstUniqChar = function(s){
+  var map={};
+  for(i=0;i<s.length;i++){
+    if(map[s[i]]!=undefined){
+        map[s[i]] = 2;
+    }else{
+      map[s[i]] = 1;
+    }
+  }
+  for(i=0;i<s.length;i++){
+    if(map[s[i]]!=undefined && map[s[i]]===1){
+      return i;
+    }
+  }
+  return -1;
+};
+```
+**补做【27号】**
+### [345. Reverse Vowels of a String](https://leetcode.com/problems/reverse-vowels-of-a-string/)
+编写一个函数，以字符串作为输入，反转该字符串中的元音字母。
+
+示例 1:
+```
+输入: "leetcode"
+输出: "leotcede"
+说明：第一个e<=>e, 第二个e<=>o
+```
+**【解决】**
+```js
+/** 思路： 正则校验+快慢指针
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(n)
+ */
+var reverseVowels = function(s) {
+  s = s.split('')
+  let reg = /[^aeiouAEIOU]/;
+  let l = 0;
+  let r = s.length-1;
+  while(l<=r){
+    if(reg.test(s[l])){
+      l ++
+    }else{
+      if(reg.test(s[r])){
+        r --;
+      }else{
+        let temp = s[l]
+        s[l++] = s[r]
+        s[r--] = temp
+      }
+    }
+  }
+  return s.join('')
+};
+```
+**补做【28号】**
+### [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/)
+给定 n 个非负整数 a1，a2，...，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+
+![](https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/uploads/2018/07/25/question_11.jpg)
+
+说明：你不能倾斜容器，且 n 的值至少为 2。
+示例:
+```
+输入: [1,8,6,2,5,4,8,3,7]
+输出: 49
+```
+**【解决】**
+```js
+/** 思路： 暴力
+ * @时间复杂度 O(n^2)
+ * @空间复杂度 O(1)
+ */
+var maxArea = function(height) {
+  let max = 0;
+  let min_height = 0;
+  let width = 0;
+  for (let i = 0; i < height.length; i++) {
+    for(let j = i+1; j<height.length; j++){
+      width = j-i;
+      min_height=height[i]>height[j]?height[j]:height[i]
+      let sum = width*min_height
+      max = sum>max?sum:max
+    }     
+  }
+  return max
+};
+```
+**【另一种】**
+```js
+/** 思路： 双指针，从最外侧开始计算面积，较矮的指针移动
+ * @时间复杂度 O(n)
+ * @空间复杂度 O(1)
+ */
+var maxArea = function(height) {
+  let i = 0
+  let j = height.length-1
+  let maxArea = 0
+  while (i !== j){
+    let area 
+    if (height[i] <= height[j]){
+      area = height[i] * (j - i)
+      i++
+    }else{
+      area = height[j] * (j - i)
+      j--
+    }
+    if (area > maxArea){
+      maxArea = area
+    }
+  }
+  return maxArea
+};
+```

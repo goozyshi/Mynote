@@ -1,18 +1,16 @@
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var removeDuplicates = function(nums) {
-  if(!nums){
-    return;
-  }
-  var p = 0;
-  for(var i=1; i<nums.length; i++){
-    if(nums[i]>nums[p]){
-      nums[++p]=nums[i]
+var firstUniqChar = function(s){
+  var map={};
+  for(i=0;i<s.length;i++){
+    if(map[s[i]]!=undefined){
+        map[s[i]] = 2;
     }else{
-      continue;
+      map[s[i]] = 1;
     }
   }
-  return p+1;
+  for(i=0;i<s.length;i++){
+    if(map[s[i]]!=undefined && map[s[i]]===1){
+      return i;
+    }
+  }
+  return -1;
 };
