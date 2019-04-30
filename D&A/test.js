@@ -1,16 +1,13 @@
-var firstUniqChar = function(s){
-  var map={};
-  for(i=0;i<s.length;i++){
-    if(map[s[i]]!=undefined){
-        map[s[i]] = 2;
-    }else{
-      map[s[i]] = 1;
-    }
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var arrayPairSum = function(nums) {
+  let result = 0
+  nums.sort((a,b)=>a-b)
+  for (let i = 0; i < nums.length;) {
+    result += nums[i]
+    i+=2;
   }
-  for(i=0;i<s.length;i++){
-    if(map[s[i]]!=undefined && map[s[i]]===1){
-      return i;
-    }
-  }
-  return -1;
-};
+  return result
+}
