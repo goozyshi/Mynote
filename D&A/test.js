@@ -1,22 +1,15 @@
 /**
- * @param {number[]} nums
- * @return {number}
+ * @param {string} s
+ * @return {string}
  */
-var majorityElement = function(nums) {
-  if(nums.length == 0){
-    return;
-  }
-  let count = 1;
-  let major = nums[0];
-  for (let i = 1; i < nums.length; i++) {
-    if (count == 0) {
-      count ++
-      major = nums[i]
-    } else if (major == nums[i]) {
-      count ++
-    } else {
-      count --
+var reverseWords = function(s) {
+  s = s.split(' ')
+  let res = []
+  console.log('s', s)
+  for (let i = s.length-1; i >= 0; i--) {
+    if (s[i] != '') {
+      res.push(s[i])
     }
+    console.log(res)
   }
-  return major
 };
