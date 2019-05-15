@@ -1,14 +1,13 @@
 /**
- * @param {string} s
- * @return {string}
+ * @param {number} rowIndex
+ * @return {number[]}
  */
-var reverseWords = function(s) {
-  s = s.split(' ')
-  let res = []
-  for (let i = s.length-1; i >= 0; i--) {
-    if (s[i] != '') {
-      res.push(s[i])
+var getRow = function(rowIndex) {
+  let res[0]= 1
+  for (let i = 1; i < rowIndex+1; i++) {
+    for (let j = i; j >= 1; j --) {
+      res[j] == res[j-1]
     }
   }
-  return res.join(' ')
+  return res
 };
