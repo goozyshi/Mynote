@@ -1,13 +1,15 @@
-/**
- * @param {number} rowIndex
- * @return {number[]}
- */
 var getRow = function(rowIndex) {
-  let res[0]= 1
-  for (let i = 1; i < rowIndex+1; i++) {
-    for (let j = i; j >= 1; j --) {
-      res[j] == res[j-1]
+  var row = [1];
+  for (var i = 1 ; i <= rowIndex ; i++) {
+    console.log('i', i)
+    for (var j = i; j > 0; j--) {
+      console.log('j', j)
+      if (j === i) {
+        row[j] = 1;
+      } else {
+        row[j] = row[j - 1] + row[j];
+      }
     }
   }
-  return res
+  return row;
 };
