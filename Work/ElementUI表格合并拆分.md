@@ -209,6 +209,12 @@ HTML
           class-name="sub_row"
           label="type">
           <template slot-scope="scope">
+            <div v-for="(order, index) in scope.row.orderDetail" :key="order.goodsName+index">
+              <div style="border: 1px solid #EBEEF5; padding: 5.5px 10px; line-height: 23px;">{{order.goodsName}}</div>
+            </div>
+          </template>
+          <!-- 使用表格嵌套在数据规模较大时性能很差-->
+          <!-- <template slot-scope="scope">
             <el-table :data="scope.row.info" :show-header="false">
               <el-table-column
                 prop="type">
@@ -223,7 +229,7 @@ HTML
                 </template>
               </el-table-column>
             </el-table>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column
           prop="msg"
